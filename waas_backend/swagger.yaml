@@ -1,0 +1,293 @@
+consumes:
+- application/json
+definitions:
+  BlockWalletsReq:
+    properties:
+      blocknames:
+        items:
+          type: string
+        type: array
+        x-go-name: BlockNames
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  CreateUserReq:
+    properties:
+      age:
+        format: int64
+        type: integer
+        x-go-name: Age
+      contact:
+        type: string
+        x-go-name: Contact
+      kycdetails:
+        type: string
+        x-go-name: KycDetails
+      name:
+        type: string
+        x-go-name: Name
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  CreateWalletReq:
+    properties:
+      walletname:
+        type: string
+        x-go-name: WalletName
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  DeleteUserReq:
+    properties:
+      deleteids:
+        items:
+          type: string
+        type: array
+        x-go-name: DeleteIDs
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  DeleteWalletsReq:
+    properties:
+      deletenames:
+        items:
+          type: string
+        type: array
+        x-go-name: DeleteNames
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  LoginReq:
+    properties:
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+  TransferReq:
+    properties:
+      amount:
+        format: double
+        type: number
+        x-go-name: Amount
+      walletname:
+        type: string
+        x-go-name: WalletName
+    type: object
+    x-go-package: bitbucket.org/waas_pro/api/views
+
+responses:
+  CreateUserRes:
+    type: object
+    properties:
+      username:
+        type: string
+      name:
+        type: string
+      age:
+        type: integer
+        format: int64
+      contact:
+        type: string
+      kycdetails:
+        type: string
+    x-go-package: bitbucket.org/waas_pro/api/views
+
+  GetUsersRes:
+    type: object
+    properties:
+      uid:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+
+  Wallets:
+    type: object
+    properties:
+      walletName:
+        type: string
+      walletBalance:
+        type: integer
+        format: int64
+      isActive:
+        type: bool
+
+
+  CreateWalletRes:
+    type: object
+    properties:
+      walletName:
+        type: string
+
+  SignInRes:
+    type: object
+    properties:
+      uid:
+        type: string
+      wallets:
+        $ref: '#/responses/Wallets'
+
+
+host: localhost:3000
+info:
+  contact:
+    email: itn.abhinav.gupta@grabtaxi.com
+    name: Abhinav Gupta
+  description: |-
+    this is to show how to write RESTful APIs in golang.
+    that is to provide a detailed overview of the language specs
+  title: WAAS API.
+  version: 1.0.0
+paths:
+  /credit/{id}:
+    post:
+      operationId: idOfTransactonsEndpoint
+      parameters:
+        - description: This text will appear as description of your request body.
+          in: body
+          name: Body
+          schema:
+            $ref: '#/definitions/TransferReq'
+      responses:
+        "201":
+          type: string
+      summary: Transactions does some amazing stuff.
+      tags:
+      - transactions-tag
+  /debit/{id}:
+    post:
+      operationId: idOfTransactonsEndpoint
+      parameters:
+        - description: This text will appear as description of your request body.
+          in: body
+          name: Body
+          schema:
+            $ref: '#/definitions/TransferReq'
+      responses:
+        "201":
+          type: string
+      summary: Transactions does some amazing stuff.
+      tags:
+      - transactions-tag
+  /login:
+    post:
+      operationId: idOfLoginEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/LoginReq'
+      responses:
+        "200":
+          $ref: '#/responses/SignInRes'
+      summary: Login does some amazing stuff.
+      tags:
+      - login-tag
+  /users:
+    delete:
+      operationId: idOfUsersEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/DeleteUserReq'
+      responses:
+        "200":
+          type: string
+      summary: Users does some amazing stuff.
+      tags:
+      - users-tag
+    get:
+      operationId: idOfUsersEndpoint
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/GetUsersRes'
+      summary: Users does some amazing stuff.
+      tags:
+      - users-tag
+    post:
+      operationId: idOfUsersEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/CreateUserReq'
+      responses:
+        "200":
+          $ref: '#/responses/CreateUserRes'
+      summary: Users does some amazing stuff.
+      tags:
+      - users-tag
+  /users/{id}:
+    get:
+      operationId: idOfWalletsEndpoint
+      responses:
+        "201":
+          schema:
+            $ref: '#/responses/Wallets'
+      summary: Wallets does some amazing stuff.
+      tags:
+      - wallets-tag
+  /wallet/{id}:
+    delete:
+      operationId: idOfWalletsEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/DeleteWalletsReq'
+      responses:
+        "201":
+          type: string
+      summary: Wallets does some amazing stuff.
+      tags:
+      - wallets-tag
+    post:
+      operationId: idOfWalletsEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/CreateWalletReq'
+      responses:
+        "201":
+          schema:
+            $ref: '#/responses/CreateWalletRes'
+      summary: Wallets does some amazing stuff.
+      tags:
+      - wallets-tag
+
+  /block/{id}:
+    post:
+      operationId: idOfWalletsEndpoint
+      parameters:
+        - description: This text will appear as description of your request body.
+          in: body
+          name: Body
+          schema:
+            $ref: '#/definitions/BlockWalletsReq'
+      responses:
+        "201":
+          type: string
+      summary: Wallets does some amazing stuff.
+      tags:
+        - wallets-tag
+produces:
+- application/json
+schemes:
+- http
+- https
+security:
+- api_key: []
+securityDefinitions:
+  api_key:
+    in: header
+    name: KEY
+    type: apiKey
+swagger: "2.0"
